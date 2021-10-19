@@ -1,15 +1,21 @@
-let names = [{ name: 'John Doe' }]
+import { posts } from './posts';
 
 export default function handler(req, res) {
   const { method } = req;
 
   switch (method) {
     case 'GET':
-      res.status(200).json(names);
+      res.status(200).json(posts[0]);
       break;
     case 'POST':
-      names = [...names, { name: 'Harry Potter'}]
-      res.status(200).json(names);
+      inserted = [
+        ...posts,
+        {
+          ...posts[0],
+          title: `Post number ${posts.length + 2}`,
+        },
+      ];
+      res.status(200).json(inserted);
       break;
     default:
       res.setHeader('Allow', ['GET', 'PUT']);
